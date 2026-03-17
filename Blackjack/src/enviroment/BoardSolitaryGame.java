@@ -2,6 +2,7 @@ package enviroment;
 
 import states.CardValueState;
 import states.GameState;
+import states.UserState;
 
 public class BoardSolitaryGame {
 
@@ -10,6 +11,7 @@ public class BoardSolitaryGame {
 	private Player player; 
 	private CroupierBeatable croupier;
 	
+	private int currentBet;
 	private int round;
 	
 	private GameState gameState;
@@ -32,12 +34,14 @@ public class BoardSolitaryGame {
 	public Player getPlayer() { return player; }
 	public CroupierBeatable getCroupier() { return croupier; }
 	public int getRound() {return round; }
+	public int getCurrentBet() {return currentBet; }
 	public GameState getGameState() { return gameState; }
 	
 	// SETTERS
 	public void setPlayer( Player player ) { this.player = player; }
 	public void setCroupier( CroupierBeatable croupier ) { this.croupier = croupier; }
 	public void setRound( int round ) { this.round = round; }
+	public void setCurrentBet( int currentBet ) { this.currentBet = currentBet; }
 	
 	
 	// ***************
@@ -70,6 +74,32 @@ public class BoardSolitaryGame {
 	}
 	
 	/**
+	 * Return the correct end message, but if the game hasn't ended, return null
+	 * @return
+	 */
+	public String getEndMessage() {
+		String msg = "";
+		
+		if( gameState == GameState.ENDED ) {
+			
+			// Jugador gana
+			if( player.getPlayingState() == UserState.PLAYING ) {
+				msg += "¡Felicidades! ¡Has ganado! ¡Eres el rey/reina del casino!";
+			}
+			// Jugador pierde
+			else {
+				msg += "Se han quedado con todo tu dinero... pero aún no esta todo perdido, la siguiente la ganas!";
+			}
+			
+			return msg;
+		}
+		
+		// The game hasn't ended
+		return null;
+	}
+	
+	
+	/**
 	 * Set the chips to the croupier and get an string with the chips that the cropuier hasat the end of the round
 	 * @return
 	 */
@@ -86,23 +116,23 @@ public class BoardSolitaryGame {
 			
 			// The croupier has more points than the player
 			if( currentPlayerPoints < croupierPoints ) {
-				croupier.addChips( croupier.getCurrentBet() );
+				croupier.addChips( currentBet );
 			}
 			// The player has more points than the croupier
 			else if( currentPlayerPoints > croupierPoints ) {
-				croupier.addChips( -croupier.getCurrentBet() );
+				croupier.addChips( -currentBet );
 			}
 			// Draw: Nothing
 		}
 		
 		// The croupier passed 21 points
 		else if( croupier.getCardValueState() == CardValueState.NONE_CARD_VALUE ) {
-			croupier.addChips( -croupier.getCurrentBet() );
+			croupier.addChips( -currentBet );
 		}
 		
 		// The player passed 21 points
 		else {
-			croupier.addChips( croupier.getCurrentBet() );
+			croupier.addChips( currentBet );
 		}
 		
 		// Add the message (the same for every situation)
@@ -128,14 +158,14 @@ public class BoardSolitaryGame {
 			
 			// Impossible to have "points <= 0"
 			if( currentPlayerPoints < croupierPoints ) {
-				player.addChips( -player.getCurrentBet() );
+				player.addChips( -currentBet );
 				msg += "Jugador " + (1) + " Ohh has perdido esta ronda, ahora tienes " + player.getChips() + " ficha(s)";
 			}
 			else if( currentPlayerPoints == croupierPoints ) {
 				msg += "Jugador " + (1) + " ¡Has empatado! Ahora tienes " + player.getChips() + " ficha(s)";
 			}
 			else {
-				player.addChips( player.getCurrentBet() );
+				player.addChips( currentBet );
 				msg += "Jugador " + (1) + " Tomaa, has ganadooo :D, ahora tienes " + player.getChips() + " ficha(s)";
 			}
 		
@@ -143,13 +173,13 @@ public class BoardSolitaryGame {
 		
 		// The player passed 21 points
 		else if( player.getCardValueState() == CardValueState.NONE_CARD_VALUE ) {
-			player.addChips( -player.getCurrentBet() );
+			player.addChips( -currentBet );
 			msg += "Jugador " + (1) + " Ohh has perdido esta ronda, ahora tienes " + player.getChips() + " ficha(s)";
 		}
 		
 		// The croupier passed 21 points
 		else {
-			player.addChips( player.getCurrentBet() );
+			player.addChips( currentBet );
 			msg += "Jugador " + (1) + " Tomaa, has ganadooo :D, ahora tienes " + player.getChips() + " ficha(s)";
 		}
 		

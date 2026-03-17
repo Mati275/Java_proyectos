@@ -8,7 +8,7 @@ public class Player extends User{
 	
 	
 	private int chips; // Chips that the player has
-	protected int currentBet; // The number of chips in the currentBet
+	//protected int currentBet; // The number of chips in the currentBet
 	
 	private int id; // An id for each player
 	
@@ -22,7 +22,7 @@ public class Player extends User{
 		super();
 		
 		this.chips = chips;
-		currentBet = 0;
+		//currentBet = 0;
 
 		// Create the id for the player
 		id = nextId;
@@ -38,7 +38,7 @@ public class Player extends User{
 	// GETTERS 
 	public int getChips() { return chips; }
 
-	public int getCurrentBet() { return currentBet; }
+	//public int getCurrentBet() { return currentBet; }
 
 	public int getId() { return id; }
 	
@@ -47,7 +47,7 @@ public class Player extends User{
 	// SETTERS
 	public void setChips( int chips ) { this.chips = chips ; }
 	
-	public void setCurrentBet( int currentBet ) { this.currentBet = currentBet ; }
+	//public void setCurrentBet( int currentBet ) { this.currentBet = currentBet ; }
 
 	public void setId( int id ) { this.id = id; }
 

@@ -10,7 +10,8 @@ public class BlackjackGame {
 		// VARIABLES
 		
 		JConsole console = new JConsole(80, 20);
-		Game game;
+		SolitaryGame solitaryGame;
+		
 		String errorMessage = "No has elegido bien el numero";
 		//CroupierBeatable croupier;
 
@@ -22,8 +23,8 @@ public class BlackjackGame {
 		
 		if(gameMode == 1) {
 			console.clear();
-			game = new SolitaryGame();
-			game.turnLoop( console );
+			solitaryGame = new SolitaryGame();
+			solitaryGame.turnLoop( console );
 		} else if( gameMode == 2) {
 			
 		}

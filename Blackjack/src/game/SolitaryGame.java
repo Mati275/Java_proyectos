@@ -12,26 +12,21 @@ import states.*;
 public class SolitaryGame {
 
 	// ATTRIBUTES
-	
-	private Player player; // This variable is for having acces to the only player created in the array of players in the game
-	private CroupierBeatable croupier;
+	private BoardSolitaryGame board;
 	
 	
 	// CONSTRUCTOR
 	public SolitaryGame() {
-		super( 1 );
-		
-		this.croupier = new CroupierBeatable(); // Assign the croupier
-		this.player = super.getPlayers()[0];  // Assign the player
+		board = new BoardSolitaryGame();
 	}
 	
 	
 	// GETTERS
-	public Player getPlayer() { return player; }
+	public BoardSolitaryGame getBoard() { return board; }
 	
 	
 	// SETTERS
-	public void setPlayer( Player player ) { this.player = player; }
+	public void setBoard( BoardSolitaryGame board) { this.board = board; }
 	
 	
 	// **********
@@ -39,182 +34,229 @@ public class SolitaryGame {
 	// **********
 	
 	
-	@Override
+	
 	public void turnLoop(JConsole console) {
 		
 		char answer;
-		int currentBet;
+		//int currentBet;
 		boolean inTurnLoop = true;
 		
 		while(inTurnLoop) {
 			
-			printUsers(console);
-			currentBet = getPlayerCurrentBet(console, player);
-			player.setCurrentBet(currentBet);
-			croupier.setCurrentBet(currentBet);
+			console.print( board.getUsersChips() );
+			board.setCurrentBet(getPlayerCurrentBet(console, board.getPlayer()));
+			//player.setCurrentBet(currentBet);
+			//croupier.setCurrentBet(currentBet);
 			
 			console.println();
 			
-			croupier.addCard(2);
-			player.addCard(2);
+			board.getCroupier().addCard(2);
+			board.getPlayer().addCard(2);
 			
 			// PRINT CROUPIER'S CARDS
 			console.println("El croupier tiene: ");
-			console.print(croupier.cardsToString());
-			console.println(croupier.cardValueToString() + "\n");
+			console.print(board.getCroupier().cardsToString());
+			console.println(board.getCroupier().cardValueToString() + "\n");
 			
 			// PRINT PLAYER'S CARDS
 			console.println("Tu tienes: ");
-			console.print(player.cardsToString());
-			console.println(player.cardValueToString() + "\n");
+			console.print(board.getPlayer().cardsToString());
+			console.println(board.getPlayer().cardValueToString() + "\n");
 			
 			answer = getPlayerAddOneCard( console );
-			while( answer == 'Y' || answer == 'y' && player.getCardValueState() != CardValueState.NONE_CARD_VALUE) {
+			while( answer == 'Y' || answer == 'y' && board.getPlayer().getCardValueState() != CardValueState.NONE_CARD_VALUE) {
 				
 				// ADD ONE CARD TO THE PLAYER
-				player.addCard();
+				board.getPlayer().addCard();
 				
 				// PRINT PLAYER'S CARDS
 				console.println("Tu tienes: ");
-				console.print(player.cardsToString());
-				console.println(player.cardValueToString());
+				console.print(board.getPlayer().cardsToString());
+				console.println(board.getPlayer().cardValueToString());
 				
 				// When the card is added, the value is still valid, ask the player if they want to get another card
-				if( player.getCardValueState() != CardValueState.NONE_CARD_VALUE ) {
+				if( board.getPlayer().getCardValueState() != CardValueState.NONE_CARD_VALUE ) {
 					answer = getPlayerAddOneCard( console );
 				}	
 			}
 			
-			while( croupier.addCard() && croupier.getCardValueState() != CardValueState.NONE_CARD_VALUE && croupier.getMaxCardValue() < player.getMaxCardValue() ) {
+			while( !board.getCroupier().isCardsFull() && board.getCroupier().getCardValueState() != CardValueState.NONE_CARD_VALUE && board.getCroupier().getMaxCardValue() < board.getPlayer().getMaxCardValue() ) {
 				// ADD ONE CARD TO THE CROUPIER
 				
-				
 				// PRINT CROUPIER'S CARDS
+				board.getCroupier().addCard();
+				
 				console.println("El croupier tiene: ");
-				console.print(croupier.cardsToString());
-				console.println(croupier.cardValueToString());
+				console.print(board.getCroupier().cardsToString());
+				console.println(board.getCroupier().cardValueToString());
 			}
 			
 			
-			setChipsToEachPlayer(console);
-			setChipsToTheCroupier(console);
+			console.println(board.getAndSetPlayerChips());
+			console.print(board.getAndSetCroupierChips());
 			
 			// TODO: HACERLO MAS OPTIMO
-			croupier.removeAllCards();
-			player.removeAllCards();
+			board.getCroupier().removeAllCards();
+			board.getPlayer().removeAllCards();
 			
-			hasGameEnded();
+			board.hasGameEnded();
 			
-			if( gameState == GameState.ENDED ) {
+			if( board.getGameState() == GameState.ENDED ) {
 				inTurnLoop = false;
 			}
 			
-			console.println();
+			console.println("\n");
 			
 		}
+		
+		console.println(board.getEndMessage());
 		
 		
 		
 	}
 	
-	@Override
-	public boolean hasGameEnded() {
-		if( croupier.getChips() <= 0 || player.getChips() <= 0 ) {
-			gameState = GameState.ENDED;
-			return true;
+	
+	/**
+	 * Returns a correct value of the bet that the player in the parameter want to give
+	 * @param console
+	 * @param player
+	 * @return
+	 */
+	public int getPlayerCurrentBet(JConsole console, Player player) {
+		int bet;
+		console.print("¿Cuanto quieres apostar en esta ronda? ");
+		bet = console.readInt();
+		
+		while( bet < 1 || bet > player.getChips() ) {
+			console.println("¡No puedes apostar ese valor!");
+			console.print("¿Cuanto quieres apostar en esta ronda ?");
+			bet = console.readInt();
+			
 		}
-		return false;
+		
+		return bet;
 	}
 	
 	/**
-	 * Set chips to the croupier, at the end of the round
+	 * Ask if the player want to get another card and get a valid answer character
 	 * @param console
+	 * @return char (return the character that the player inputs)
 	 */
-	public void setChipsToTheCroupier(JConsole console) {
-		int croupierPoints = croupier.getMaxCardValue();
-		int currentPlayerPoints = player.getMaxCardValue();
+	public char getPlayerAddOneCard(JConsole console) {
+		char answer;
+		console.print("Quieres sacar otra carta? (Y/N) ");
+		answer = console.readChar();
 		
-		// Remember: If the points are "-1" it means that the user passed 21 points
-		
-		// The croupier and the player haven't passed 21 points
-		if( croupier.getCardValueState() != CardValueState.NONE_CARD_VALUE && player.getCardValueState() != CardValueState.NONE_CARD_VALUE ) {
-			if( currentPlayerPoints < croupierPoints ) {
-				croupier.addChips( croupier.getCurrentBet() );
-				console.println( "El croupier tiene " + croupier.getChips() + " ficha(s)" );
-			}
-			else if( currentPlayerPoints == croupierPoints ) {
-				console.println( "El croupier tiene " + croupier.getChips() + " ficha(s)" );
-			}
-			else {
-				croupier.addChips( -croupier.getCurrentBet() );
-				console.println( "El croupier tiene " + croupier.getChips() + " ficha(s)" );
-			}
-		}
-		
-		// The croupier passed 21 points
-		else if( croupier.getCardValueState() == CardValueState.NONE_CARD_VALUE ) {
-			croupier.addChips( -croupier.getCurrentBet() );
-			console.println( "El croupier tiene " + croupier.getChips() + " ficha(s)" );
-		}
-		
-		// The player passed 21 points
-		else {
-			croupier.addChips( croupier.getCurrentBet() );
-			console.println( "El croupier tiene " + croupier.getChips() + " ficha(s)" );
-		}
-	}
-	
-	
-	
-	// EXTRA @OVERRIDE
-	
-	@Override
-	public void printUsers(JConsole console) {
-		
-		console.println(croupier.toString()); 
-		console.println(player.toString());
-		
-	}
-	
-	@Override
-	public void setChipsToEachPlayer( JConsole console ) {
-		int croupierPoints = croupier.getMaxCardValue();
-		int currentPlayerPoints;
-		
-
-		
-		currentPlayerPoints = player.getMaxCardValue();
-		
-		
-		// The croupier and the player haven't passed 21 points
-		if( croupier.getCardValueState() != CardValueState.NONE_CARD_VALUE && player.getCardValueState() != CardValueState.NONE_CARD_VALUE ) {
+		while( answer != 'N' && answer != 'n' && answer != 'Y' && answer != 'y' ) {
+			console.println("No has puesto un valor correcto :(");
+			console.print("Quieres sacar otra carta? (Y/N) ");
+			answer = console.readChar();
 			
-			// Impossible to have "points <= 0"
-			if( currentPlayerPoints < croupierPoints ) {
-				player.addChips( -player.getCurrentBet() );
-				console.println( "Jugador " + (1) + " Ohh has perdido esta ronda, ahora tienes " + player.getChips() + " ficha(s)" );
-			}
-			else if( currentPlayerPoints == croupierPoints ) {
-				console.println( "Jugador " + (1) + " ¡Has empatado! Ahora tienes " + player.getChips() + " ficha(s)" );
-			}
-			else {
-				player.addChips( player.getCurrentBet() );
-				console.println( "Jugador " + (1) + " Tomaa, has ganadooo :D, ahora tienes " + player.getChips() + " ficha(s)" );
-			}
-		
-		} 
-		
-		// The player passed 21 points
-		else if( player.getCardValueState() == CardValueState.NONE_CARD_VALUE ) {
-			player.addChips( -player.getCurrentBet() );
-			console.println( "Jugador " + (1) + " Ohh has perdido esta ronda, ahora tienes " + player.getChips() + " ficha(s)" );
 		}
+		return answer;
 		
-		// The croupier passed 21 points
-		else {
-			player.addChips( player.getCurrentBet() );
-			console.println( "Jugador " + (1) + " Tomaa, has ganadooo :D, ahora tienes " + player.getChips() + " ficha(s)" );
-		}
 	}
+	
+	
+	
+//	@Override
+//	public boolean hasGameEnded() {
+//		if( croupier.getChips() <= 0 || player.getChips() <= 0 ) {
+//			gameState = GameState.ENDED;
+//			return true;
+//		}
+//		return false;
+//	}
+//	
+//	/**
+//	 * Set chips to the croupier, at the end of the round
+//	 * @param console
+//	 */
+//	public void setChipsToTheCroupier(JConsole console) {
+//		int croupierPoints = croupier.getMaxCardValue();
+//		int currentPlayerPoints = player.getMaxCardValue();
+//		
+//		// Remember: If the points are "-1" it means that the user passed 21 points
+//		
+//		// The croupier and the player haven't passed 21 points
+//		if( croupier.getCardValueState() != CardValueState.NONE_CARD_VALUE && player.getCardValueState() != CardValueState.NONE_CARD_VALUE ) {
+//			if( currentPlayerPoints < croupierPoints ) {
+//				croupier.addChips( croupier.getCurrentBet() );
+//				console.println( "El croupier tiene " + croupier.getChips() + " ficha(s)" );
+//			}
+//			else if( currentPlayerPoints == croupierPoints ) {
+//				console.println( "El croupier tiene " + croupier.getChips() + " ficha(s)" );
+//			}
+//			else {
+//				croupier.addChips( -croupier.getCurrentBet() );
+//				console.println( "El croupier tiene " + croupier.getChips() + " ficha(s)" );
+//			}
+//		}
+//		
+//		// The croupier passed 21 points
+//		else if( croupier.getCardValueState() == CardValueState.NONE_CARD_VALUE ) {
+//			croupier.addChips( -croupier.getCurrentBet() );
+//			console.println( "El croupier tiene " + croupier.getChips() + " ficha(s)" );
+//		}
+//		
+//		// The player passed 21 points
+//		else {
+//			croupier.addChips( croupier.getCurrentBet() );
+//			console.println( "El croupier tiene " + croupier.getChips() + " ficha(s)" );
+//		}
+//	}
+//	
+//	
+//	
+//	// EXTRA @OVERRIDE
+//	
+//	@Override
+//	public void printUsers(JConsole console) {
+//		
+//		console.println(croupier.toString()); 
+//		console.println(player.toString());
+//		
+//	}
+//	
+//	@Override
+//	public void setChipsToEachPlayer( JConsole console ) {
+//		int croupierPoints = croupier.getMaxCardValue();
+//		int currentPlayerPoints;
+//		
+//
+//		
+//		currentPlayerPoints = player.getMaxCardValue();
+//		
+//		
+//		// The croupier and the player haven't passed 21 points
+//		if( croupier.getCardValueState() != CardValueState.NONE_CARD_VALUE && player.getCardValueState() != CardValueState.NONE_CARD_VALUE ) {
+//			
+//			// Impossible to have "points <= 0"
+//			if( currentPlayerPoints < croupierPoints ) {
+//				player.addChips( -player.getCurrentBet() );
+//				console.println( "Jugador " + (1) + " Ohh has perdido esta ronda, ahora tienes " + player.getChips() + " ficha(s)" );
+//			}
+//			else if( currentPlayerPoints == croupierPoints ) {
+//				console.println( "Jugador " + (1) + " ¡Has empatado! Ahora tienes " + player.getChips() + " ficha(s)" );
+//			}
+//			else {
+//				player.addChips( player.getCurrentBet() );
+//				console.println( "Jugador " + (1) + " Tomaa, has ganadooo :D, ahora tienes " + player.getChips() + " ficha(s)" );
+//			}
+//		
+//		} 
+//		
+//		// The player passed 21 points
+//		else if( player.getCardValueState() == CardValueState.NONE_CARD_VALUE ) {
+//			player.addChips( -player.getCurrentBet() );
+//			console.println( "Jugador " + (1) + " Ohh has perdido esta ronda, ahora tienes " + player.getChips() + " ficha(s)" );
+//		}
+//		
+//		// The croupier passed 21 points
+//		else {
+//			player.addChips( player.getCurrentBet() );
+//			console.println( "Jugador " + (1) + " Tomaa, has ganadooo :D, ahora tienes " + player.getChips() + " ficha(s)" );
+//		}
+//	}
 	
 }

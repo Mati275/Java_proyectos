@@ -109,7 +109,7 @@ public abstract class User {
 				randomCardValue = randomCard.getValue().getValue(); // Get the value of the card generated randomly
 				
 				// The card has a correct value && there is space on the array --> Assign the value and add it in the array
-				if( randomCardValue >= 0 && !cardsIsFull() ) {
+				if( randomCardValue >= 0 && !isCardsFull() ) {
 					
 					// Si la CARTA ES UN AS --> asigno un valor diferente para cada tipo de valor
 					if( randomCardValue == 0 ) {
@@ -167,19 +167,13 @@ public abstract class User {
 	 * Method that checks if the array of cards is full
 	 * @return boolean (if the array of card is full)
 	 */
-	public boolean cardsIsFull() {
+	public boolean isCardsFull() {
 		
 		if(numCards >= cards.length) {
 			return true;
 		}
 		return false;
-//		for(int i = 0; i < cards.length; i++) {
-//			if( cards[i] == null ) {
-//				return false;
-//			}
-//		}
-//		
-//		return true;
+
 		
 	}
 	

@@ -6,7 +6,7 @@ public class CroupierBeatable extends Croupier{
 	
 	// ATTRIBUTES	
 	private int chips;			// Amount of chips that have to make a bet
-	protected int currentBet;	// Amount of chips that is on bet right now
+	//protected int currentBet;	// Amount of chips that is on bet right now
 	
 	// Static attributes
 	private static final int INITIAL_CHIPS = 100;
@@ -28,12 +28,12 @@ public class CroupierBeatable extends Croupier{
 	// GETTERS 
 	public int getChips() { return chips; }
 	
-	public int getCurrentBet() { return currentBet; }
+	//public int getCurrentBet() { return currentBet; }
 
 	// SETTERS
 	public void setChips( int chips ) { this.chips = chips ; }
 	
-	public void setCurrentBet( int currentBet ) { this.currentBet = currentBet ; }
+	//public void setCurrentBet( int currentBet ) { this.currentBet = currentBet ; }
 
 	
 	
