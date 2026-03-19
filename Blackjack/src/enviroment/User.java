@@ -115,14 +115,13 @@ public abstract class User {
 	 * @return boolean (if the card is added correctly return true, otherwise, false)
 	 */
 	
-	public boolean addCard( int numCards ) {
-		Card randomCard; 
+	public boolean addCard( Card randomCard ) {
 		int randomCardValue;
 		
-		if(numCards > 0) {
-			for(int i = 0; i < numCards; i++) {
+		//if(numCards > 0) {
+			//for(int i = 0; i < numCards; i++) {
 				
-				randomCard = new Card(); // Create a random card
+				//randomCard = new Card(); // Create a random card
 				randomCardValue = randomCard.getValue().getValue(); // Get the value of the card generated randomly
 				
 				// The card has a correct value && there is space on the array --> Assign the value and add it in the array
@@ -163,13 +162,13 @@ public abstract class User {
 					return false; // One card card hasn't a valid value or the array of cards is full
 				}
 				
-			}
+			//}
 			return true; // All the cards have a valid value 
-		} 
+		//} 
 		
-		else {
-			throw new IllegalArgumentException("It's impossible to add " + numCards + " number(s) of card(s)"); // The value passed by parameter is 0 or negative
-		}
+//		else {
+//			throw new IllegalArgumentException("It's impossible to add " + numCards + " number(s) of card(s)"); // The value passed by parameter is 0 or negative
+//		}
 		
 	}
 	
