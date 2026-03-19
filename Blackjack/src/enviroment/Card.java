@@ -10,7 +10,7 @@ public class Card {
 	private Suits suit;		// State of the suit of the card
 	private Values value;	// State of the value of the card
 	
-	public static CardContainer cardContainer;
+	//public static CardContainer cardContainer;
 	
 	
 	// Static attributes

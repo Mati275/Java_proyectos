@@ -16,6 +16,8 @@ public class BoardSolitaryGame {
 	
 	private GameState gameState;
 	
+	private CardContainer cardContainer;
+	
 	// CONSTRUCTOR
 	/**
 	 * Initialize the attributes "player", "croupier", "round", "gameState"
@@ -24,7 +26,9 @@ public class BoardSolitaryGame {
 		
 		player = new Player("Pepito");
 		croupier = new CroupierBeatable("Juancito");
-
+		
+		cardContainer = new CardContainer();
+		
 		round = 0;
 		
 		gameState = GameState.PLAYING;
