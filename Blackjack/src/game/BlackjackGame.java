@@ -19,7 +19,7 @@ public class BlackjackGame {
 		
 		// START GAME
 		
-		gameMode = getUserAnswer( console, "Bienvenido/s al blackjack... quieres jugar solo (pulsa 1) o con amigos (pulsa 2)", errorMessage);
+		gameMode = getUserAnswer( console, "Bienvenido/s al blackjack... quieres jugar solo (pulsa 1) o con amigos (pulsa 2): ", errorMessage);
 		
 		if(gameMode == 1) {
 			console.clear();
@@ -29,7 +29,7 @@ public class BlackjackGame {
 			
 		}
 		
-		gameMode = getUserAnswer(console, "Ya has experimentado una partida... te gustaría volver a jugar, dime si quieres jugar solo (pulsa 1) o con amigos (pulsa 2)", errorMessage);
+		gameMode = getUserAnswer(console, "Ya has experimentado una partida... te gustaría volver a jugar, dime si quieres jugar solo (pulsa 1) o con amigos (pulsa 2): ", errorMessage);
 		
 		
 	}

@@ -54,13 +54,13 @@ public class SolitaryGame {
 			board.getPlayer().addCard(2);
 			
 			// PRINT CROUPIER'S CARDS
-			console.println("El croupier tiene: ");
+			console.println(board.getCroupier().toString() + " ");
 			console.print(board.getCroupier().cardsToString());
 			console.println(board.getCroupier().cardValueToString() + "\n");
 			
 			// PRINT PLAYER'S CARDS
-			console.println("Tu tienes: ");
-			console.print(board.getPlayer().cardsToString());
+			console.println(board.getPlayer().toString() + " ");
+			console.print( board.getPlayer().cardsToString() );
 			console.println(board.getPlayer().cardValueToString() + "\n");
 			
 			answer = getPlayerAddOneCard( console );
@@ -70,9 +70,10 @@ public class SolitaryGame {
 				board.getPlayer().addCard();
 				
 				// PRINT PLAYER'S CARDS
-				console.println("Tu tienes: ");
+				console.println(board.getPlayer().toString() + " ");
 				console.print(board.getPlayer().cardsToString());
 				console.println(board.getPlayer().cardValueToString());
+				console.println();
 				
 				// When the card is added, the value is still valid, ask the player if they want to get another card
 				if( board.getPlayer().getCardValueState() != CardValueState.NONE_CARD_VALUE ) {
@@ -86,9 +87,10 @@ public class SolitaryGame {
 				// PRINT CROUPIER'S CARDS
 				board.getCroupier().addCard();
 				
-				console.println("El croupier tiene: ");
+				console.println(board.getCroupier().toString() + " ");
 				console.print(board.getCroupier().cardsToString());
 				console.println(board.getCroupier().cardValueToString());
+				console.println();
 			}
 			
 			
@@ -123,6 +125,7 @@ public class SolitaryGame {
 	 * @return
 	 */
 	public int getPlayerCurrentBet(JConsole console, Player player) {
+		// Es correcto dejar un metodo que pida un valor al usuario sin una exepción, ya que no es responsabilidad de quien llama la función, sinó del usuario --> Error esperado
 		int bet;
 		console.print("¿Cuanto quieres apostar en esta ronda? ");
 		bet = console.readInt();
@@ -136,6 +139,21 @@ public class SolitaryGame {
 		
 		return bet;
 	}
+	
+//	/**
+//	 * Valid
+//	 * @param bet
+//	 * @param player
+//	 * @return 
+//	 */
+//	public int validateBet(int bet, Player player) {
+//		
+//		if( bet < 1 || bet > player.getChips() ) {
+//			throw new IllegalArgumentException("¡No puedes apostar ese valor!");
+//		}
+//		
+//		return bet;
+//	}
 	
 	/**
 	 * Ask if the player want to get another card and get a valid answer character

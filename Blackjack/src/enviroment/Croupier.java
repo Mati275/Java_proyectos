@@ -9,8 +9,8 @@ public abstract class Croupier extends User {
 
 	
 	// CONSTRUCTOR(S)
-	public Croupier() {
-		super();
+	public Croupier(String name) {
+		super(name);
 	}
 	
 	// GETTERS 

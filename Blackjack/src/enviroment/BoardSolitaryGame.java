@@ -22,8 +22,8 @@ public class BoardSolitaryGame {
 	 */
 	public BoardSolitaryGame() {
 		
-		player = new Player();
-		croupier = new CroupierBeatable();
+		player = new Player("Pepito");
+		croupier = new CroupierBeatable("Juancito");
 
 		round = 0;
 		
@@ -47,7 +47,16 @@ public class BoardSolitaryGame {
 	// ***************
 	// OTHER METHODS
 	// ***************
+	
 
+	/**
+	 * Add one to the attribute of "round"
+	 */
+	public void addOneRund() {
+		round++;
+	}
+	
+	
 	/**
 	 * Get all the users toString, meaning that returns an string of the number of chips of each user
 	 * @return
@@ -55,8 +64,8 @@ public class BoardSolitaryGame {
 	public String getUsersChips() {
 		String msg = "";
 		
-		msg += croupier.toString() + "\n";
-		msg += player.toString() + "\n";
+		msg += croupier.chipsToString() + "\n";
+		msg += player.chipsToString() + "\n";
 
 		return msg;
 	}
@@ -136,7 +145,7 @@ public class BoardSolitaryGame {
 		}
 		
 		// Add the message (the same for every situation)
-		msg += "El croupier tiene " + croupier.getChips() + " ficha(s)";
+		msg += croupier.toString() + " tiene " + croupier.getChips() + " ficha(s)";
 
 		return msg;
 	}
@@ -159,14 +168,14 @@ public class BoardSolitaryGame {
 			// Impossible to have "points <= 0"
 			if( currentPlayerPoints < croupierPoints ) {
 				player.addChips( -currentBet );
-				msg += "Jugador " + (1) + " Ohh has perdido esta ronda, ahora tienes " + player.getChips() + " ficha(s)";
+				msg += player.toString() + " Ohh has perdido esta ronda, ahora tienes " + player.getChips() + " ficha(s)";
 			}
 			else if( currentPlayerPoints == croupierPoints ) {
-				msg += "Jugador " + (1) + " ¡Has empatado! Ahora tienes " + player.getChips() + " ficha(s)";
+				msg += player.toString() + " ¡Has empatado! Ahora tienes " + player.getChips() + " ficha(s)";
 			}
 			else {
 				player.addChips( currentBet );
-				msg += "Jugador " + (1) + " Tomaa, has ganadooo :D, ahora tienes " + player.getChips() + " ficha(s)";
+				msg += player.toString() + " Tomaa, has ganadooo :D, ahora tienes " + player.getChips() + " ficha(s)";
 			}
 		
 		} 
@@ -174,13 +183,13 @@ public class BoardSolitaryGame {
 		// The player passed 21 points
 		else if( player.getCardValueState() == CardValueState.NONE_CARD_VALUE ) {
 			player.addChips( -currentBet );
-			msg += "Jugador " + (1) + " Ohh has perdido esta ronda, ahora tienes " + player.getChips() + " ficha(s)";
+			msg += player.toString() + " Ohh has perdido esta ronda, ahora tienes " + player.getChips() + " ficha(s)";
 		}
 		
 		// The croupier passed 21 points
 		else {
 			player.addChips( currentBet );
-			msg += "Jugador " + (1) + " Tomaa, has ganadooo :D, ahora tienes " + player.getChips() + " ficha(s)";
+			msg += player.toString() + " Tomaa, has ganadooo :D, ahora tienes " + player.getChips() + " ficha(s)";
 		}
 		
 		return msg;

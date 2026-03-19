@@ -1,11 +1,14 @@
 package enviroment;
 
+import exceptions.invalidMaxCardsException;
 // IMPORTS
 import states.*;
 
 public abstract class User {
 	
 	// ATTRIBUTES
+	
+	protected String name;
 	
 	protected Card cards[]; // Array of card that this specific user has
 	protected int numCards; // Number of cards that the player has
@@ -31,19 +34,31 @@ public abstract class User {
 	
 	
 	// CONSTRUCTOR
-	public User() {
-				
-		cards = new Card[MAX_CARDS];
+	public User( int max_cards, String name ) {
+		
+		if( max_cards <= 0 ) {
+			throw new invalidMaxCardsException("It's not possible to add ");
+		}
+		
+		cards = new Card[max_cards];		
 		numCards = 0;
+		
+		this.name = name;
 		
 		playingState = UserState.PLAYING;
 		cardValueState = CardValueState.NORMAL_CARD_VALUE;
 		
 	}
 	
+	public User( String name ) {
+		this(MAX_CARDS, name);
+	}
+	
 	
 	// GETTERS
 	public Card[] getCards() { return cards; }
+	
+	public String getName() { return name; }
 	
 	public int getNumCards() { return numCards; }
 	
@@ -57,6 +72,8 @@ public abstract class User {
 	
 	// SETTERS
 	public void setNumCards( int numCards ) { this.numCards = numCards; }
+	
+	public void setName(String name) { this.name = name; }
 	
 	public void setCardValue( int cardValue ) { this.cardValue = cardValue; } 
 	public void setExtraCardValue( int extraCardValue ) { this.extraCardValue = extraCardValue; } 
@@ -84,11 +101,11 @@ public abstract class User {
 		// Reset the value of the cards that this user has
 		cardValue = 0;
 		extraCardValue = 0;
+		cardValueState = CardValueState.NORMAL_CARD_VALUE; // Reset the state of the card value
 		
 		for (int i = 0; i < numCards; i++) { cards[i] = null; }
 		
 		numCards = 0; // Reset the number of the cards that this user has
-		cardValueState = CardValueState.NORMAL_CARD_VALUE; // Reset the state of the card value
 		
 	}
 	
@@ -148,10 +165,11 @@ public abstract class User {
 				
 			}
 			return true; // All the cards have a valid value 
-		}
+		} 
 		
-		// TODO: THROW AN ERROR
-		return false; // The value passed by parameter is 0 or negative
+		else {
+			throw new IllegalArgumentException("It's impossible to add " + numCards + " number(s) of card(s)"); // The value passed by parameter is 0 or negative
+		}
 		
 	}
 	
@@ -168,15 +186,8 @@ public abstract class User {
 	 * @return boolean (if the array of card is full)
 	 */
 	public boolean isCardsFull() {
-		
-		if(numCards >= cards.length) {
-			return true;
-		}
-		return false;
-
-		
+		return numCards >= cards.length;
 	}
-	
 	
 	/** 
 	 * Return an string that contains all the information about the cards that this user has
@@ -192,7 +203,7 @@ public abstract class User {
 		return msg;
 	}
 	
-	// 
+	
 	
 	/** 
 	 * Return an string that contains the information that the player must know about the total value of the cards of this user
@@ -201,9 +212,17 @@ public abstract class User {
 	public String cardValueToString() {
 		if( cardValueState == CardValueState.NORMAL_CARD_VALUE ) return "Puntos: " + cardValue;
 		else if( cardValueState == CardValueState.EXTRA_CARD_VALUE ) return "Puntos: " + cardValue + " / " + extraCardValue;
-		else return "Te has pasado de 21";
+		else return "Puntos: Más de 21";
 	}
 	
+	@Override
+	/**
+	 * Returns an string indicating who is this user
+	 * @param
+	 */
+	public String toString() {
+		return name;
+	}
 	
 	
 	/**

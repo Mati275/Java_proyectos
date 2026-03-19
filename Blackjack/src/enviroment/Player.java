@@ -1,5 +1,6 @@
 package enviroment;
 
+import exceptions.invalidChipsException;
 import states.UserState;
 
 public class Player extends User{
@@ -18,8 +19,14 @@ public class Player extends User{
 	private static final int INITIAL_CHIPS = 100;
 	
 	// CONSTRUCTOR(S)
-	public Player(int chips) {
-		super();
+	public Player(int chips, String name){
+		super( name );
+		
+		
+		if(chips <= 0) {
+			throw new invalidChipsException("Se han agregado : " + chips + " fichas");
+		}
+		
 		
 		this.chips = chips;
 		//currentBet = 0;
@@ -30,8 +37,8 @@ public class Player extends User{
 		
 	}
 	
-	public Player() {
-		this(INITIAL_CHIPS);
+	public Player(String name){
+		this(INITIAL_CHIPS, name);
 	}
 
 	
@@ -82,13 +89,12 @@ public class Player extends User{
 		return true;
 	}
 	
-	@Override
 	/**
 	 * Returns in a string the value of the chips that this user has to bet
 	 * @return
 	 */
-	public String toString() {
-		return "Jugador " + (id + 1) + ": " + chips + " fichas para apostar" ;
+	public String chipsToString() {
+		return toString() + ": " + chips + " fichas para apostar" ;
 	}
 	
 	

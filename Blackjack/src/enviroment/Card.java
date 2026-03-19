@@ -16,14 +16,14 @@ public class Card {
 //	private static final String[] VALUE = { "As", "Dos", "Tres", "Cuatro", "Cinco", "Seis", "Siete", "Ocho", "Nueve", "Diez", "J", "K", "Q" };
 	
 	// CONSTRUCTOR(S)
-	public Card(Suits suit, Values value) {
+	public Card( Suits suit, Values value ) {
 		this.suit = suit;
 		this.value = value;
 	}
 	
 	// Constructor (generates a random card)
 	public Card() {
-		this( Suits.random(), Values.random());
+		this( Suits.random(), Values.random() );
 	}
 	
 	
@@ -57,7 +57,6 @@ public class Card {
 //	}
 
 	
-	// TODO: HAY QUE CAMBIAR ESTE METODO, NO TIENE QUE DEVOLVER EL VALOR ASOCIADO A UNA CARTA, SINO EL STRING QUE LA REPRESENTA
 	@Override
 	public String toString() {
 		return value.getValue() + " de " + suit.getSuitName();

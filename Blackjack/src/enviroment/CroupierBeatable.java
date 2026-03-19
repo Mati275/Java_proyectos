@@ -12,15 +12,15 @@ public class CroupierBeatable extends Croupier{
 	private static final int INITIAL_CHIPS = 100;
 	
 	// CONSTRUCTOR(S)
-	public CroupierBeatable(int chips) {
-		super();
+	public CroupierBeatable(int chips, String name) {
+		super( name );
 		this.chips = chips;
 		
 	}
 	
 	// Put the initial chips by default
-	public CroupierBeatable() {
-		this(INITIAL_CHIPS);
+	public CroupierBeatable(String name) {
+		this(INITIAL_CHIPS, name);
 		
 	}
 	
@@ -65,13 +65,12 @@ public class CroupierBeatable extends Croupier{
 		return true;
 	}
 
-	@Override
 	/**
 	 * Returns in a string the value of the chips that this user has to bet
 	 * @return
 	 */
-	public String toString() {
-		return "Croupier: " + chips + " fichas para apostar" ;
+	public String chipsToString() {
+		return toString() + ": " + chips + " fichas para apostar" ;
 	}
 
 
