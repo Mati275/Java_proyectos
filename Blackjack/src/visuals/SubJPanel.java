@@ -23,8 +23,8 @@ public class SubJPanel extends JPanel{
         Container parent = getParent();
         if (parent != null) {
             // Ejemplo: 50% del ancho, 20% del alto
-            int w = (int) (parent.getWidth() * multWidth);
-            int h = (int) (parent.getHeight() * multHeight);
+            int w = (int) (parent.getBounds().getWidth() * multWidth);
+            int h = (int) (parent.getBounds().getHeight() * multHeight);
             return new Dimension(w, h);
         }
         return super.getPreferredSize();
