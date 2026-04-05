@@ -2,7 +2,6 @@ package enviroment;
 
 import java.util.Random;
 
-import interfaces.IContainer;
 import states.Suits;
 import states.Values;
 
@@ -23,7 +22,7 @@ public class CardContainer implements IContainer{
 	
 	
 	// NOT MAKE THE ATTRIBUTE OF THE ARRAY OF "Cards" STATIC, BECAUSE IT'S POSSIBLE THAT WE WANT MORE THAN ONE CONTAINER OF CARDS
-	// ALL THE FUNCTIONS ARE PUBLIC BUT NOT STATIC --> THIS CONTAINER FORMS PART OF THE CARDS, AND THIS ATTRIBUTE IS PUBLIC, IT'S LIKE THIS METHODS ARE ASO STATIC
+	// ALL THE FUNCTIONS ARE PUBLIC BUT NOT STATIC --> THIS CONTAINER FORMS PART OF THE BOARD, AND THIS ATTRIBUTE IS PUBLIC, IT'S LIKE THIS METHODS ARE ASO STATIC
 	
 	// ************
 	// OTHER METHODS
@@ -41,6 +40,10 @@ public class CardContainer implements IContainer{
 		}
 	}
 
+	/**
+	 * Returns a random carf
+	 * @return
+	 */
 	public Card getRandomCard() {
 		Random alea = new Random();
 		int suit, value;
@@ -101,7 +104,7 @@ public class CardContainer implements IContainer{
 
 
 	@Override
-	public Object getElement(int idx) {
+	public IContainer getElement(int idx) {
 
 		
 		return null;

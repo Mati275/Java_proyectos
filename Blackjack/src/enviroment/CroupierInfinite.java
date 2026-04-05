@@ -4,8 +4,8 @@ public class CroupierInfinite extends Croupier{
 	// ATTRIBUTES
 	
 	// CONSTRUCTOR(S)
-	public CroupierInfinite() {
-		super();		
+	public CroupierInfinite(String name) {
+		super(name);
 	}
 	
 	
@@ -22,6 +22,8 @@ public class CroupierInfinite extends Croupier{
 	
 	
 	
+
+
 	@Override
 	public boolean isInBankruptcy() {
 		return false;

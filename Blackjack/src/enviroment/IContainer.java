@@ -1,4 +1,4 @@
-package interfaces;
+package enviroment;
 
 public interface IContainer {
 
@@ -17,7 +17,7 @@ public interface IContainer {
 	/**
 	 * Returns the element in the specified position of the container, if the index is not valid throw "IllegalArgumentException"
 	 * @param idx
-	 * @return
+	 * @return 
 	 */
 	public Object getElement(int idx);
 	

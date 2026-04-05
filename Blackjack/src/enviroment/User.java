@@ -176,9 +176,9 @@ public abstract class User {
 	 * Method that only creates and assign one card
 	 * @return boolean (if the card is added correctly)
 	 */
-	public boolean addCard() {
-		return addCard(1);
-	}
+//	public boolean addCard() {
+//		return addCard(1);
+//	}
 	
 	/** 
 	 * Method that checks if the array of cards is full

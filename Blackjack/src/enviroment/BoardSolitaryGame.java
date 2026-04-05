@@ -52,6 +52,31 @@ public class BoardSolitaryGame {
 	// OTHER METHODS
 	// ***************
 	
+	// PRIVATE METHODS
+	/**
+	 * Returns an object of a card of it's container created randomly
+	 * @return
+	 */
+	private Card getRandomCard() {
+		return cardContainer.getRandomCard();
+	}
+	
+	/**
+	 * Adds one card to the player and returns if the card is added successfully or not
+	 * @return
+	 */
+	public boolean addOneCardPlayer() {
+		return getPlayer().addCard(getRandomCard());
+	}
+	
+	/**
+	 * Adds one card to the croupier and returns if the card is added successfully or not
+	 * @return
+	 */
+	public boolean addOneCardCroupier() {
+		return getCroupier().addCard(getRandomCard());
+	}
+	
 
 	/**
 	 * Add one to the attribute of "round"
@@ -73,6 +98,8 @@ public class BoardSolitaryGame {
 
 		return msg;
 	}
+	
+	
 	
 	/**
 	 * Modifies the gameState if there's some end condition, called at the end of the turn loop
@@ -156,7 +183,7 @@ public class BoardSolitaryGame {
 	
 	
 	/**
-	 * Set the chips to the player and get an string with the chips that the player has at the end of the round
+	 * Set the chips to the player and get an string with the chips that the player has at the end of the round.
 	 * The message received is also the information that the player has whether he won the round or not
 	 * @return
 	 */
