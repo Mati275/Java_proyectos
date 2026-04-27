@@ -1,5 +1,6 @@
 package enviroment;
 
+import exceptions.EmptyContainerException;
 import states.CardValueState;
 import states.GameState;
 import states.UserState;
@@ -22,10 +23,10 @@ public class BoardSolitaryGame {
 	/**
 	 * Initialize the attributes "player", "croupier", "round", "gameState"
 	 */
-	public BoardSolitaryGame() {
+	public BoardSolitaryGame(String playerName, String croupierName) {
 		
-		player = new Player("Pepito");
-		croupier = new CroupierBeatable("Juancito");
+		player = new Player(playerName);
+		croupier = new CroupierBeatable(croupierName);
 		
 		cardContainer = new CardContainer();
 		
@@ -40,6 +41,7 @@ public class BoardSolitaryGame {
 	public int getRound() {return round; }
 	public int getCurrentBet() {return currentBet; }
 	public GameState getGameState() { return gameState; }
+	public CardContainer getCardContainer() { return cardContainer; }
 	
 	// SETTERS
 	public void setPlayer( Player player ) { this.player = player; }
@@ -58,16 +60,42 @@ public class BoardSolitaryGame {
 	 * @return
 	 */
 	private Card getRandomCard() {
-		return cardContainer.getRandomCard();
+		try {
+			return cardContainer.getRandomCard();
+		
+		} catch (EmptyContainerException err) {
+			
+			return null;
+			
+		}
+	}
+	
+	/**
+	 * Adds the number of cards indicated in the parameters to the player and returns if all the cards are added successfully or not
+	 * @param numCards
+	 * @return
+	 */
+	public boolean addCardsPlayer(int numCards) {
+		
+		boolean success = true;
+		
+		for(int i = 0; i < numCards && success; i ++) {
+			success = getPlayer().addCard(getRandomCard());
+		}
+		
+		return success;
+		
 	}
 	
 	/**
 	 * Adds one card to the player and returns if the card is added successfully or not
 	 * @return
 	 */
-	public boolean addOneCardPlayer() {
-		return getPlayer().addCard(getRandomCard());
+	public boolean addCardsPlayer() {
+		return addCardsPlayer(1);
 	}
+	
+	
 	
 	/**
 	 * Adds one card to the croupier and returns if the card is added successfully or not

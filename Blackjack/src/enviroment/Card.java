@@ -58,6 +58,17 @@ public class Card {
 //		
 //	}
 
+	@Override
+	public boolean equals(Object obj) {
+		Card card;
+		
+		if( !(obj instanceof Card) ) throw new ClassCastException("You are trying to compare a card: " + this.toString() + " with an object that isn't a card: " + obj.toString());
+		
+		card = (Card) obj;
+		
+		return this.suit == card.suit && this.value == card.value;
+		
+	}
 	
 	@Override
 	public String toString() {

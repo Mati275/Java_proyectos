@@ -34,7 +34,9 @@ public abstract class User {
 	
 	
 	// CONSTRUCTOR
-	public User( int max_cards, String name ) {
+	public User(String name, int max_cards ) {
+		
+		this.name = name;
 		
 		if( max_cards <= 0 ) {
 			throw new invalidMaxCardsException("It's not possible to add ");
@@ -43,15 +45,13 @@ public abstract class User {
 		cards = new Card[max_cards];		
 		numCards = 0;
 		
-		this.name = name;
-		
 		playingState = UserState.PLAYING;
 		cardValueState = CardValueState.NORMAL_CARD_VALUE;
 		
 	}
 	
 	public User( String name ) {
-		this(MAX_CARDS, name);
+		this(name, MAX_CARDS);
 	}
 	
 	
@@ -94,7 +94,7 @@ public abstract class User {
 	
 	
 	/** 
-	 * Remove all the cards from the array of cards, and reset all the values related with the cards
+	 * Remove all the cards from the array of cards, and reset all the values related with the cards to its initial state
 	 */
 	public void removeAllCards() {
 		
@@ -110,9 +110,9 @@ public abstract class User {
 	}
 	
 	/** 
-	 * Method that create (and assign) the number specified in the parameter of cards
-	 * @param numCards (the number of cards to assign)
-	 * @return boolean (if the card is added correctly return true, otherwise, false)
+	 * Method that adds the specified card to the deck of cards of the player
+	 * @param randomCard - The card that needs to be assigned
+	 * @return boolean - if the card is added correctly return true, otherwise, false
 	 */
 	
 	public boolean addCard( Card randomCard ) {
@@ -124,7 +124,7 @@ public abstract class User {
 				//randomCard = new Card(); // Create a random card
 				randomCardValue = randomCard.getValue().getValue(); // Get the value of the card generated randomly
 				
-				// The card has a correct value && there is space on the array --> Assign the value and add it in the array
+				// The card has a correct value && there is space on the array --> Assign the value and add it in the deck
 				if( randomCardValue >= 0 && !isCardsFull() ) {
 					
 					// Si la CARTA ES UN AS --> asigno un valor diferente para cada tipo de valor
@@ -159,11 +159,11 @@ public abstract class User {
 					}
 					
 				} else {
-					return false; // One card card hasn't a valid value or the array of cards is full
+					return false; // The card card hasn't a valid value or the array of cards is full
 				}
 				
 			//}
-			return true; // All the cards have a valid value 
+			return true; // Card added succesfully
 		//} 
 		
 //		else {

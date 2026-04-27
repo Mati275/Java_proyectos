@@ -2,6 +2,7 @@ package enviroment;
 
 import java.util.Random;
 
+import exceptions.EmptyContainerException;
 import states.Suits;
 import states.Values;
 
@@ -41,13 +42,19 @@ public class CardContainer implements IContainer{
 	}
 
 	/**
-	 * Returns a random carf
+	 * Returns a random card of the container
 	 * @return
 	 */
-	public Card getRandomCard() {
+	public Card getRandomCard(){
 		Random alea = new Random();
 		int suit, value;
 		Card randomCard;
+		
+		// The container is empty
+		if( isEmpty() ) {
+			throw new EmptyContainerException("The container of cards is empty");
+		}
+		
 		
 		// Get a random position of the container of cards
 		suit = alea.nextInt(0, suits.length);
@@ -91,14 +98,21 @@ public class CardContainer implements IContainer{
 		card = (Card) obj; // The object is a card
 			
 		for(int i = 0; i < cards.length && !found; i++) {
-			for (int j = 0; j < cards[i].length && !found; i++) {
-				if( card.equals(cards[i][j]) ) {
-					cards[i][j] = null;
-					found = true;
+			for (int j = 0; j < cards[i].length && !found; j++) {
+				
+				// The card isn't null
+				if(cards[i][j] != null) {
+					// The card is found (both if separated, because it cannot compare null objects)
+					if( card.equals(cards[i][j])) {
+						cards[i][j] = null;
+						found = true;
+					}
 				}
+				
 			}
 		}
-		throw new IllegalArgumentException("It's impossible to remove a card that isn't on the container: " + obj.toString());
+		
+		if(!found) throw new IllegalArgumentException("It's impossible to remove a card that isn't on the container: " + obj.toString());
 		
 	}
 
@@ -137,5 +151,26 @@ public class CardContainer implements IContainer{
 		} // A card isn't found
 		
 		return false;
+	}
+	
+	// Private methods (can be added to the interface)
+	
+	/**
+	 * Check if the container is empty
+	 * @return whether the conatiner is empty or not
+	 */
+	private boolean isEmpty() {
+		
+		for(int i = 0; i < cards.length; i++) {
+			for(int j = 0; j < cards[0].length; j++) {
+				// Find a filled position
+				if( cards[i][j] != null ) {
+					return false; // Container not empty
+				}
+			}
+		}
+		
+		return true; // Container empty
+		
 	}
 }

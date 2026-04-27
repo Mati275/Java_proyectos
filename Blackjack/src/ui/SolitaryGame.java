@@ -13,11 +13,12 @@ public class SolitaryGame {
 
 	// ATTRIBUTES
 	private BoardSolitaryGame board;
-	
+	private CardContainer cardContainer;
 	
 	// CONSTRUCTOR
-	public SolitaryGame() {
-		board = new BoardSolitaryGame();
+	public SolitaryGame(String playerName, String croupierName) {
+		board = new BoardSolitaryGame(playerName, croupierName);
+		cardContainer = board.getCardContainer();
 	}
 	
 	
@@ -34,7 +35,10 @@ public class SolitaryGame {
 	// **********
 	
 	
-	
+	/**
+	 * Executes the turn loop in the game until the game ends (one of the players arrives to 0 chips)
+	 * @param console
+	 */
 	public void turnLoop(JConsole console) {
 		
 		char answer;
@@ -43,6 +47,8 @@ public class SolitaryGame {
 		
 		while(inTurnLoop) {
 			
+			cleanConsole(console);
+			
 			console.print( board.getUsersChips() );
 			board.setCurrentBet(getPlayerCurrentBet(console, board.getPlayer()));
 			//player.setCurrentBet(currentBet);
@@ -50,8 +56,14 @@ public class SolitaryGame {
 			
 			console.println();
 			
-			board.getCroupier().addCard(2);
-			board.getPlayer().addCard(2);
+			// Croupier gets two cards
+			board.getCroupier().addCard( cardContainer.getRandomCard() );
+			board.getCroupier().addCard( cardContainer.getRandomCard() );
+			
+			// Player gets two cards
+			board.getPlayer().addCard( cardContainer.getRandomCard() );
+			board.getPlayer().addCard( cardContainer.getRandomCard() );
+
 			
 			// PRINT CROUPIER'S CARDS
 			console.println(board.getCroupier().toString() + " ");
@@ -63,11 +75,12 @@ public class SolitaryGame {
 			console.print( board.getPlayer().cardsToString() );
 			console.println(board.getPlayer().cardValueToString() + "\n");
 			
+			// ASK PLAYER IF WANNA TAKE ONE CARD
 			answer = getPlayerAddOneCard( console );
 			while( answer == 'Y' || answer == 'y' && board.getPlayer().getCardValueState() != CardValueState.NONE_CARD_VALUE) {
 				
 				// ADD ONE CARD TO THE PLAYER
-				board.getPlayer().addCard();
+				board.getPlayer().addCard( cardContainer.getRandomCard() );
 				
 				// PRINT PLAYER'S CARDS
 				console.println(board.getPlayer().toString() + " ");
@@ -81,11 +94,12 @@ public class SolitaryGame {
 				}	
 			}
 			
+			// GET A CARD OF THE CROUPIER UNTIL IT HASN'T SPACE IN IT'S DECK OR IT HAS MORE THAN 21 POINTS OR IT'S VALUE IT'S SUPERIOR THAN THE PLAYER
 			while( !board.getCroupier().isCardsFull() && board.getCroupier().getCardValueState() != CardValueState.NONE_CARD_VALUE && board.getCroupier().getMaxCardValue() < board.getPlayer().getMaxCardValue() ) {
 				// ADD ONE CARD TO THE CROUPIER
 				
 				// PRINT CROUPIER'S CARDS
-				board.getCroupier().addCard();
+				board.getCroupier().addCard( cardContainer.getRandomCard() );
 				
 				console.println(board.getCroupier().toString() + " ");
 				console.print(board.getCroupier().cardsToString());
@@ -95,7 +109,7 @@ public class SolitaryGame {
 			
 			
 			console.println(board.getAndSetPlayerChips());
-			console.print(board.getAndSetCroupierChips());
+			console.println(board.getAndSetCroupierChips());
 			
 			// TODO: HACERLO MAS OPTIMO
 			board.getCroupier().removeAllCards();
@@ -107,8 +121,10 @@ public class SolitaryGame {
 				inTurnLoop = false;
 			}
 			
-			console.println("\n");
-			
+			// Esperar a que el jugador presione una tecla para continuar
+			console.print("Presiona una tecla para continuar: ");
+			console.readChar();
+						
 		}
 		
 		console.println(board.getEndMessage());
@@ -116,7 +132,7 @@ public class SolitaryGame {
 		
 		
 	}
-	
+		
 	
 	/**
 	 * Returns a correct value of the bet that the player in the parameter want to give
@@ -276,5 +292,24 @@ public class SolitaryGame {
 //			console.println( "Jugador " + (1) + " Tomaa, has ganadooo :D, ahora tienes " + player.getChips() + " ficha(s)" );
 //		}
 //	}
+	
+	
+	/**
+	 * Cleans the console and put "BLACKJACK!" on the top of the console
+	 * @param console
+	 */
+	private void cleanConsole(JConsole console) {
+		String title = "BLACKJACK!";
+		
+		console.clear();
+		for(int i = 0; i < title.length(); i++) console.print("*");
+		
+		console.print("\n" + title + "\n");
+		
+		for(int i = 0; i < title.length(); i++) console.print("*");
+		
+		console.println("\n");
+
+	}
 	
 }
