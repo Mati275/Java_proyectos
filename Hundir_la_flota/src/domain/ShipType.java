@@ -13,7 +13,7 @@ public class ShipType implements Comparable<ShipType>{
     private int size;
 
     private String name;
-    private int id;
+    private int id;         // The id is the "PK" that identifies one type of ship
 
     // int points;
 
@@ -35,6 +35,7 @@ public class ShipType implements Comparable<ShipType>{
     // GETTERS
     public int getWidth() { return width; }
     public int getHeight() { return height; }
+    public int getSize() { return size; };
     public String getName() { return name; }
 
     public int getId() { return id; }
@@ -47,10 +48,11 @@ public class ShipType implements Comparable<ShipType>{
     // PRIVATE METHODS
 
     /**
-     * Creates the ShipTypes according to the parameters in the method
+     * Creates the ShipTypes according to the parameters in the method and add the types to the "shipTypes" static attribute of the class
      * @param width
      * @param height
      * @param name
+     * @param id
      * @throws InvalidShipTypeException if the length of the array in the parameters are different
      */
     private void createShipTypes(int[] width, int[] height, String[] name, int[] id ){
@@ -72,7 +74,7 @@ public class ShipType implements Comparable<ShipType>{
             // Transform the SET --> Array
             shipTypes = (ShipType[]) uniqueShipTypes.toArray();
 
-        } // The lenght aren't the same --> throw InvalidShipTypeException
+        } // The length aren't the same --> throw InvalidShipTypeException
 
         throw new InvalidShipTypeException("The method createShipTypes hasn't the right arrays according to it's lenght; width: " + width.length + " height: " + height.length + " name: " + name.length + " id: " + id.length);
 
@@ -88,13 +90,13 @@ public class ShipType implements Comparable<ShipType>{
         int[] width = { 3, 4, 7 };
         int[] height = { 2, 2, 1 };
         String[] name = { "Small", "medium", "large" };
-        int[] id = { 0, 1, 2 }
+        int[] id = { 0, 1, 2 };
 
         createShipTypes(width, height, name, id);
     }
 
     // TODO: this method
-    private void createRandomShips(){
+    private void createRandomShips(int numOfTypes){
 
     }
 
@@ -119,6 +121,7 @@ public class ShipType implements Comparable<ShipType>{
 
     }
 
+    @Override
     public int hashCode(){
         return id;
     }
