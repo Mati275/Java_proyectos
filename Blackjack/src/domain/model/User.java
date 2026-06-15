@@ -1,8 +1,10 @@
-package enviroment;
+package domain.model;
 
-import exceptions.invalidMaxCardsException;
+import domain.enums.CardValueState;
+import domain.enums.UserState;
+import domain.exceptions.invalidMaxCardsException;
 // IMPORTS
-import states.*;
+
 
 public abstract class User {
 	
@@ -16,7 +18,7 @@ public abstract class User {
 	protected int cardValue; // Si el usuario saca un AS, el valor bajo se almacena aqui, si este valor > 21 --> No se tiene en cuenta
 	protected int extraCardValue; // Si el usuario saca un AS, el valor alto se almacena aqui, si este valor > 21 --> No se tiene en cuenta
 	
-	protected CardValueState cardValueState; 
+	protected CardValueState cardValueState;
 	protected UserState playingState; // Current state of the user
 	
 	protected static final int MAX_CARDS = 5;

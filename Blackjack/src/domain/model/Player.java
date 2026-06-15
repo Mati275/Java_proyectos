@@ -1,7 +1,7 @@
-package enviroment;
+package domain.model;
 
-import exceptions.invalidChipsException;
-import states.UserState;
+import domain.exceptions.invalidChipsException;
+import domain.enums.UserState;
 
 public class Player extends User{
 

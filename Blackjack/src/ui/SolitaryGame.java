@@ -1,8 +1,11 @@
 package ui;
 
+import domain.enums.CardValueState;
+import domain.enums.GameState;
+import domain.model.Deck;
+import domain.model.Player;
 import jconsole.JConsole;
-import enviroment.*;
-import states.*;
+import service.BlackjackService;
 
 // Dentro de los "<>" esta el tipo de croupier que quiero que sea el croupier de esta partida, para especificarlo
 
@@ -12,22 +15,22 @@ import states.*;
 public class SolitaryGame {
 
 	// ATTRIBUTES
-	private BoardSolitaryGame board;
-	private CardContainer cardContainer;
+	private BlackjackService board;
+	private Deck deck;
 	
 	// CONSTRUCTOR
 	public SolitaryGame(String playerName, String croupierName) {
-		board = new BoardSolitaryGame(playerName, croupierName);
-		cardContainer = board.getCardContainer();
+		board = new BlackjackService(playerName, croupierName);
+		deck = board.getCardContainer();
 	}
 	
 	
 	// GETTERS
-	public BoardSolitaryGame getBoard() { return board; }
+	public BlackjackService getBoard() { return board; }
 	
 	
 	// SETTERS
-	public void setBoard( BoardSolitaryGame board) { this.board = board; }
+	public void setBoard( BlackjackService board) { this.board = board; }
 	
 	
 	// **********
@@ -57,12 +60,12 @@ public class SolitaryGame {
 			console.println();
 			
 			// Croupier gets two cards
-			board.getCroupier().addCard( cardContainer.getRandomCard() );
-			board.getCroupier().addCard( cardContainer.getRandomCard() );
+			board.getCroupier().addCard( deck.getRandomCard() );
+			board.getCroupier().addCard( deck.getRandomCard() );
 			
 			// Player gets two cards
-			board.getPlayer().addCard( cardContainer.getRandomCard() );
-			board.getPlayer().addCard( cardContainer.getRandomCard() );
+			board.getPlayer().addCard( deck.getRandomCard() );
+			board.getPlayer().addCard( deck.getRandomCard() );
 
 			
 			// PRINT CROUPIER'S CARDS
@@ -80,7 +83,7 @@ public class SolitaryGame {
 			while( answer == 'Y' || answer == 'y' && board.getPlayer().getCardValueState() != CardValueState.NONE_CARD_VALUE) {
 				
 				// ADD ONE CARD TO THE PLAYER
-				board.getPlayer().addCard( cardContainer.getRandomCard() );
+				board.getPlayer().addCard( deck.getRandomCard() );
 				
 				// PRINT PLAYER'S CARDS
 				console.println(board.getPlayer().toString() + " ");
@@ -99,7 +102,7 @@ public class SolitaryGame {
 				// ADD ONE CARD TO THE CROUPIER
 				
 				// PRINT CROUPIER'S CARDS
-				board.getCroupier().addCard( cardContainer.getRandomCard() );
+				board.getCroupier().addCard( deck.getRandomCard() );
 				
 				console.println(board.getCroupier().toString() + " ");
 				console.print(board.getCroupier().cardsToString());

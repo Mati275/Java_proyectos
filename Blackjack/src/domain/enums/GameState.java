@@ -1,4 +1,4 @@
-package states;
+package domain.enums;
 
 public enum GameState {
 	PLAYING {

@@ -1,12 +1,12 @@
-package enviroment;
+package domain.model;
 
 import java.util.Random;
 
-import exceptions.EmptyContainerException;
-import states.Suits;
-import states.Values;
+import domain.exceptions.EmptyContainerException;
+import domain.enums.Suits;
+import domain.enums.Values;
 
-public class CardContainer implements IContainer{
+public class Deck implements IContainer{
 
 	// ATTRIBUTES
 	private static final Suits suits[] = { Suits.CORAZONES, Suits.DIAMANTES, Suits.PICAS, Suits.TREBOLES };
@@ -15,7 +15,7 @@ public class CardContainer implements IContainer{
 	private Card cards[][];
 	
 	// CONSTRUCTOR
-	public CardContainer() {
+	public Deck() {
 		cards = new Card[suits.length][values.length];
 		
 		resetContainer();
@@ -153,13 +153,13 @@ public class CardContainer implements IContainer{
 		return false;
 	}
 	
-	// Private methods (can be added to the interface)
+	// Private methods?? --> Transformed to public (can be added to the interface)
 	
 	/**
 	 * Check if the container is empty
 	 * @return whether the conatiner is empty or not
 	 */
-	private boolean isEmpty() {
+	public boolean isEmpty() {
 		
 		for(int i = 0; i < cards.length; i++) {
 			for(int j = 0; j < cards[0].length; j++) {

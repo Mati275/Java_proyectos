@@ -1,4 +1,4 @@
-package enviroment;
+package domain.model;
 
 public class CroupierInfinite extends Croupier{
 	// ATTRIBUTES

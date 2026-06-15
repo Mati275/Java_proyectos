@@ -1,7 +1,7 @@
-package enviroment;
+package domain.model;
 
-import states.Suits;
-import states.Values;
+import domain.enums.Suits;
+import domain.enums.Values;
 
 
 public class Card {

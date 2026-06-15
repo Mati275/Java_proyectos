@@ -1,4 +1,4 @@
-package enviroment;
+package domain.model;
 
 public interface IContainer {
 

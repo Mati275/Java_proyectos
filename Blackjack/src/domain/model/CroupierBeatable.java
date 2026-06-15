@@ -1,6 +1,6 @@
-package enviroment;
+package domain.model;
 
-import states.UserState;
+import domain.enums.UserState;
 
 public class CroupierBeatable extends Croupier{
 	

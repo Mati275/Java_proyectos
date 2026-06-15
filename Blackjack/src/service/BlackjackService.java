@@ -1,15 +1,23 @@
-package enviroment;
+package service;
 
-import exceptions.EmptyContainerException;
-import states.CardValueState;
-import states.GameState;
-import states.UserState;
+import domain.model.Card;
+import domain.model.Deck;
+import domain.model.CroupierBeatable;
+import domain.model.Player;
+import domain.exceptions.EmptyContainerException;
+import domain.enums.CardValueState;
+import domain.enums.GameState;
+import domain.enums.UserState;
 
-public class BoardSolitaryGame {
+
+// Rules and the logic of the game that includes all the basic elements
+
+
+public class BlackjackService {
 
 	// ATTRIBUTES
 	// Users in game
-	private Player player; 
+	private Player player;
 	private CroupierBeatable croupier;
 	
 	private int currentBet;
@@ -17,18 +25,18 @@ public class BoardSolitaryGame {
 	
 	private GameState gameState;
 	
-	private CardContainer cardContainer;
+	// private CardContainer cardContainer;
 	
 	// CONSTRUCTOR
 	/**
 	 * Initialize the attributes "player", "croupier", "round", "gameState"
 	 */
-	public BoardSolitaryGame(String playerName, String croupierName) {
+	public BlackjackService(String playerName, String croupierName) {
 		
 		player = new Player(playerName);
 		croupier = new CroupierBeatable(croupierName);
 		
-		cardContainer = new CardContainer();
+		cardContainer = new Deck();
 		
 		round = 0;
 		
@@ -41,7 +49,7 @@ public class BoardSolitaryGame {
 	public int getRound() {return round; }
 	public int getCurrentBet() {return currentBet; }
 	public GameState getGameState() { return gameState; }
-	public CardContainer getCardContainer() { return cardContainer; }
+	public Deck getCardContainer() { return cardContainer; }
 	
 	// SETTERS
 	public void setPlayer( Player player ) { this.player = player; }
@@ -128,7 +136,8 @@ public class BoardSolitaryGame {
 	}
 	
 	
-	
+
+
 	/**
 	 * Modifies the gameState if there's some end condition, called at the end of the turn loop
 	 * @return boolean (return if the game has just ended)
@@ -140,7 +149,10 @@ public class BoardSolitaryGame {
 		}
 		return false;
 	}
-	
+
+
+
+
 	/**
 	 * Return the correct end message, but if the game hasn't ended, return null
 	 * @return
@@ -165,8 +177,9 @@ public class BoardSolitaryGame {
 		// The game hasn't ended
 		return null;
 	}
-	
-	
+
+	// TODO: No tiene que devolver un String
+
 	/**
 	 * Set the chips to the croupier and get an string with the chips that the cropuier hasat the end of the round
 	 * @return
@@ -209,7 +222,9 @@ public class BoardSolitaryGame {
 		return msg;
 	}
 	
-	
+
+	// TODO: No tiene que devolver un String
+
 	/**
 	 * Set the chips to the player and get an string with the chips that the player has at the end of the round.
 	 * The message received is also the information that the player has whether he won the round or not

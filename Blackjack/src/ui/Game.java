@@ -1,8 +1,9 @@
 package ui;
 
-import enviroment.*;
+import domain.model.Croupier;
+import domain.model.Player;
 import jconsole.JConsole;
-import states.GameState;
+import domain.enums.GameState;
 
 public abstract class Game {
 	
@@ -10,7 +11,7 @@ public abstract class Game {
 	
 	// Atributos genericos que un juego contiene --> Luego en cada subclase se especializa con atributos propios
 	private Croupier croupier; // TODO: VER SI ES NECESARIO O NO
-	private Player[] players; 
+	private Player[] players;
 	private int numPlayers;
 	
 	// States
