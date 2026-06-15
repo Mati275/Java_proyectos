@@ -32,7 +32,7 @@ public abstract class Game {
 
 		// Fill the array of players with the number of players
 		for(int i = 0; i < numPlayers; i++) {
-			players[i] = new Player();
+			players[i] = new Player(" ");
 		}
 		
 		gameState = GameState.PLAYING; // Assign the value of the initial gameState

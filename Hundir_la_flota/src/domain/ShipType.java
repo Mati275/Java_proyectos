@@ -16,7 +16,6 @@ public class ShipType implements Comparable<ShipType>{
     private int id;         // The id is the "PK" that identifies one type of ship
 
     // int points;
-
     public static ShipType[] shipTypes; // All the shipTypes in the game
 
     // CONSTRUCTOR
@@ -72,7 +71,7 @@ public class ShipType implements Comparable<ShipType>{
                 }
             }
             // Transform the SET --> Array
-            shipTypes = (ShipType[]) uniqueShipTypes.toArray();
+            shipTypes = uniqueShipTypes.toArray(new ShipType[0]);
 
         } // The length aren't the same --> throw InvalidShipTypeException
 

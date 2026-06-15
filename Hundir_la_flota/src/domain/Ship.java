@@ -89,7 +89,7 @@ public class Ship implements Comparable<Ship>{
     /**
      * Change the number of cells depending on the quantity passed in parameters.
      * @param quantity
-     * @return The remaining cells actually
+     * @return The remaining cells that this ship actually has
      * @throws IllegalArgumentException if the quantity of the remaining cells after the change is "< 0" or "> getShipTypeSize()"
      */
     public int changeRemainingCells( int quantity ){
