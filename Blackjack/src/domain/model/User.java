@@ -18,8 +18,8 @@ public abstract class User {
 	protected int cardValue; // Si el usuario saca un AS, el valor bajo se almacena aqui, si este valor > 21 --> No se tiene en cuenta
 	protected int extraCardValue; // Si el usuario saca un AS, el valor alto se almacena aqui, si este valor > 21 --> No se tiene en cuenta
 	
-	protected CardValueState cardValueState;
-	protected UserState playingState; // Current state of the user
+	protected CardValueState cardValueState;			// Current state of the cards of the user (if can still playing on the round / the value of the card to take account)
+	protected UserState playingState; 					// Current state of the user (if can still playing the game or not)
 	
 	protected static final int MAX_CARDS = 5;
 	
@@ -104,7 +104,7 @@ public abstract class User {
 		cardValue = 0;
 		extraCardValue = 0;
 		cardValueState = CardValueState.NORMAL_CARD_VALUE; // Reset the state of the card value
-		
+
 		for (int i = 0; i < numCards; i++) { cards[i] = null; }
 		
 		numCards = 0; // Reset the number of the cards that this user has
@@ -158,6 +158,7 @@ public abstract class User {
 					// Si el estado actual es el normal (despues de verificar el cambio de estado anterior), pero se ha pasado de 21 --> Cambia de estado
 					if( cardValueState == CardValueState.NORMAL_CARD_VALUE && this.cardValue > 21) {
 						cardValueState = CardValueState.NONE_CARD_VALUE;
+
 					}
 					
 				} else {

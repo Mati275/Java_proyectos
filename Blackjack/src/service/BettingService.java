@@ -1,6 +1,7 @@
 package service;
 
 import domain.enums.CardValueState;
+import domain.enums.RoundResultSolitary;
 import domain.model.CroupierBeatable;
 import domain.model.Player;
 
@@ -22,15 +23,19 @@ public class BettingService {
     public void setBet(int value){ currentBet += value; }
 
 
+
+
     /**
      * Called when the round just end, this method gives the correct chips to both: player and croupier, also restarts the bet
      * @param player
      * @param croupier
      */
-    public void resolveRound(Player player, CroupierBeatable croupier){
+    public RoundResultSolitary resolveRound(Player player, CroupierBeatable croupier){
 
         setPlayerChips(player, croupier);
         setCroupierChips(player, croupier);
+
+
 
         currentBet = 0;
 
@@ -43,7 +48,61 @@ public class BettingService {
 
 
 
-    // TODO: SIMPLIFY THIS TWO METHODS
+
+    public RoundResultSolitary setPlayerAndCroupierChips(Player player, CroupierBeatable croupier){
+
+        int currentCroupierPoints = croupier.getMaxCardValue();
+        int currentPlayerPoints = player.getMaxCardValue();
+
+        // The croupier and the player haven't passed 21 points
+        if( croupier.getCardValueState() != CardValueState.NONE_CARD_VALUE && player.getCardValueState() != CardValueState.NONE_CARD_VALUE ) {
+
+            // Impossible to have "points <= 0"
+
+            // Croupier wins
+            if( currentPlayerPoints < currentCroupierPoints ) {
+                player.addChips( -currentBet );
+                croupier.addChips( currentBet );
+                return RoundResultSolitary.CROUPIER_WIN;
+                // msg += player.toString() + " Ohh has perdido esta ronda, ahora tienes " + player.getChips() + " ficha(s)";
+            }
+
+            // Draw
+            else if( currentPlayerPoints == currentCroupierPoints ) {
+                return RoundResultSolitary.DRAW;
+                //msg += player.toString() + " ¡Has empatado! Ahora tienes " + player.getChips() + " ficha(s)";
+            }
+
+            // Player wins
+            else {
+                player.addChips( currentBet );
+                croupier.addChips( -currentBet );
+                return RoundResultSolitary.PLAYER_WIN;
+                // msg += player.toString() + " Tomaa, has ganadooo :D, ahora tienes " + player.getChips() + " ficha(s)";
+            }
+
+        }
+
+        // The player passed 21 points
+        else if( player.getCardValueState() == CardValueState.NONE_CARD_VALUE ) {
+            player.addChips( -currentBet );
+            croupier.addChips( currentBet );
+            return RoundResultSolitary.CROUPIER_WIN;
+
+            //msg += player.toString() + " Ohh has perdido esta ronda, ahora tienes " + player.getChips() + " ficha(s)";
+        }
+
+        // The croupier passed 21 points
+        else {
+            player.addChips( currentBet );
+            croupier.addChips( -currentBet );
+            return RoundResultSolitary.PLAYER_WIN;
+
+            //msg += player.toString() + " Tomaa, has ganadooo :D, ahora tienes " + player.getChips() + " ficha(s)";
+        }
+
+    }
+
 
     /**
      * Set the chips to the player and get an string with the chips that the player has at the end of the round.

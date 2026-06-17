@@ -2,9 +2,11 @@ package service;
 
 import domain.enums.CardValueState;
 import domain.enums.GameState;
+import domain.enums.RoundResultSolitary;
 import domain.model.CroupierBeatable;
 import domain.model.Deck;
 import domain.model.Player;
+import domain.model.User;
 
 public class BlackjackService2 {
 
@@ -55,26 +57,43 @@ public class BlackjackService2 {
     public void setCurrentBet( int currentBet ) { this.currentBet = currentBet; }
 
 
-
-    public void startRound(int bet) {
+    /**
+     * Starts the round, setting the current, adding one to the round and giving the initial cards to the player and croupier
+     * @param bet
+     * @return The number of the round
+     */
+    public int startRound(int bet) {
         bettingService.setBet(bet); // Set the current bet
 
         round++;
         deckService.giveInitialCards(player, croupier);
-    }
 
+        return round;
+    }
 
     /**
      * Called when there is an end condition
+     * @return Who wins the round (a value of the enum "RoundResultSolitary")
      */
-    public void endRound() {
+    public RoundResultSolitary endRound() {
         bettingService.resolveRound(player, croupier);
+
         deckService.resetContainer(); // Reset the deck
+        return null;
     }
+
+    public boolean isGameEnded(){
+
+        player.isInBankruptcy();
+        croupier.isInBankruptcy();
+
+        return player.isInBankruptcy() || croupier.isInBankruptcy();
+    }
+
 
     /**
      * Adds a card to the player
-     * @return true if the player has less than 22 points, false if the player can't play
+     * @return true if the player has less than 22 points, false if the player can't play another time in this round
      */
     public boolean playerHit() {
         player.addCard(deckService.getRandomCard());
@@ -83,7 +102,7 @@ public class BlackjackService2 {
 
     /**
      * Adds a card to the croupier
-     * @return true if the croupier has less than 22 points, false if the croupier can't play
+     * @return true if the croupier has less than 22 points, false if the croupier can't play another time in this round
      */
     public boolean croupierHit() {
         croupier.addCard(deckService.getRandomCard());
