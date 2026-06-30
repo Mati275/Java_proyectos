@@ -1,9 +1,10 @@
-package main.java.service;
+package service;
 
-import main.java.domain.enums.CardValueState;
-import main.java.domain.enums.RoundResultSolitary;
-import main.java.domain.model.CroupierBeatable;
-import main.java.domain.model.Player;
+
+import domain.enums.CardValueState;
+import domain.enums.RoundResultSolitary;
+import domain.model.CroupierBeatable;
+import domain.model.Player;
 
 public class BettingService {
 
@@ -13,7 +14,7 @@ public class BettingService {
     // CONSTRUCTOR
 
     public BettingService(){
-        this.bet = 0;
+        this.currentBet = 0;
     }
 
     // GETTERS

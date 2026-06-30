@@ -1,10 +1,10 @@
 package main.java.ui;
 
+import jconsole.JConsole;
 import main.java.domain.enums.CardValueState;
 import main.java.domain.enums.GameState;
 import main.java.domain.model.Deck;
 import main.java.domain.model.Player;
-import jconsole.JConsole;
 import main.java.service.Board;
 
 // Dentro de los "<>" esta el tipo de croupier que quiero que sea el croupier de esta partida, para especificarlo

@@ -1,4 +1,4 @@
-package main.java.domain.exceptions;
+package domain.exceptions;
 
 public class FullContainerException extends RuntimeException{
 

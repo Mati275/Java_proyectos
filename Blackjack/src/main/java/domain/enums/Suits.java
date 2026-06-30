@@ -1,4 +1,4 @@
-package main.java.domain.enums;
+package domain.enums;
 
 import java.util.concurrent.ThreadLocalRandom;
 

@@ -4,11 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectionFactory {
+public class MakeConnection {
 
 
-    private static final String URL =
-            "jdbc:postgresql://localhost:5432/blackjack";
+    private static final String URL = "jdbc:postgresql://localhost:5432/blackjack";
 
     private static final String USER = "Matias";
     private static final String PASSWORD = "12345";

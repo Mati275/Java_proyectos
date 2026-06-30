@@ -1,27 +1,28 @@
-package main.java.domain.model;
+package domain.model;
 
-import main.java.domain.exceptions.invalidChipsException;
-import main.java.domain.enums.UserState;
+
+import domain.enums.UserState;
+import domain.exceptions.invalidChipsException;
 
 public class Player extends User{
 
 	// ATTRIBUTES
 	
-	
+	private PlayerUser playerUser; // The user registred in DB that is playing the game
+
 	private int chips; // Chips that the player has
 	//protected int currentBet; // The number of chips in the currentBet
-	
 	private int id; // An id for each player
 	
 	// Static attributes
-	private static int nextId; 
-	
+	private static int nextId;
 	private static final int INITIAL_CHIPS = 100;
 	
 	// CONSTRUCTOR(S)
-	public Player(int chips, String name){
-		super( name );
-		
+	public Player(int chips, PlayerUser playerUser){
+		super( playerUser.getNickname() );
+
+		this.playerUser = playerUser;
 		
 		if(chips <= 0) {
 			throw new invalidChipsException("Se han agregado : " + chips + " fichas");
@@ -37,8 +38,8 @@ public class Player extends User{
 		
 	}
 	
-	public Player(String name){
-		this(INITIAL_CHIPS, name);
+	public Player(PlayerUser playerUser){
+		this(INITIAL_CHIPS, playerUser);
 	}
 
 	
@@ -96,6 +97,7 @@ public class Player extends User{
 	public String chipsToString() {
 		return toString() + ": " + chips + " fichas para apostar" ;
 	}
-	
-	
+
+
+
 }

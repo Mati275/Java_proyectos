@@ -1,8 +1,7 @@
-package main.java.domain.model;
+package domain.model;
 
-import main.java.domain.enums.Suits;
-import main.java.domain.enums.Values;
-
+import domain.enums.Suits;
+import domain.enums.Values;
 
 public class Card {
 	

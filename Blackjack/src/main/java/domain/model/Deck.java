@@ -1,10 +1,12 @@
-package main.java.domain.model;
+package domain.model;
+
+
+
+import domain.enums.Suits;
+import domain.enums.Values;
+import domain.exceptions.EmptyContainerException;
 
 import java.util.Random;
-
-import main.java.domain.exceptions.EmptyContainerException;
-import main.java.domain.enums.Suits;
-import main.java.domain.enums.Values;
 
 public class Deck implements IContainer{
 

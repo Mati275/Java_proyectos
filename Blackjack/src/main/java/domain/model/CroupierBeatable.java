@@ -1,6 +1,7 @@
-package main.java.domain.model;
+package domain.model;
 
-import main.java.domain.enums.UserState;
+
+import domain.enums.UserState;
 
 public class CroupierBeatable extends Croupier{
 	

@@ -1,4 +1,4 @@
-package main.java.domain.model;
+package domain.model;
 
 public interface IContainer {
 

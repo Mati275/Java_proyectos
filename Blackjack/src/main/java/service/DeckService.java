@@ -1,9 +1,10 @@
-package main.java.service;
+package service;
 
-import main.java.domain.model.Card;
-import main.java.domain.model.CroupierBeatable;
-import main.java.domain.model.Deck;
-import main.java.domain.model.Player;
+
+import domain.model.Card;
+import domain.model.CroupierBeatable;
+import domain.model.Deck;
+import domain.model.Player;
 
 public class DeckService {
 

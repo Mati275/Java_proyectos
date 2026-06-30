@@ -1,10 +1,12 @@
-package main.java.domain.model;
+package domain.model;
 
-import main.java.domain.enums.CardValueState;
-import main.java.domain.enums.UserState;
-import main.java.domain.exceptions.invalidMaxCardsException;
+
 // IMPORTS
 
+
+import domain.enums.CardValueState;
+import domain.enums.UserState;
+import domain.exceptions.invalidMaxCardsException;
 
 public abstract class User {
 	

@@ -1,4 +1,4 @@
-package main.java.domain.enums;
+package domain.enums;
 
 public enum CardValueState {
 	//CARD_VALUE: Se toma el valor mas pequeño (porque no ha tocado as o el otro valor de as se ha pasado de 21)

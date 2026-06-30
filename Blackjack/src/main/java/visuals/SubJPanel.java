@@ -1,9 +1,7 @@
 package main.java.visuals;
 
-import java.awt.Container;
-import java.awt.Dimension;
-
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
 
 public class SubJPanel extends JPanel{
 

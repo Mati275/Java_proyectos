@@ -1,9 +1,9 @@
 package main.java.ui;
 
-import main.java.domain.model.Croupier;
-import main.java.domain.model.Player;
 import jconsole.JConsole;
 import main.java.domain.enums.GameState;
+import main.java.domain.model.Croupier;
+import main.java.domain.model.Player;
 
 public abstract class Game {
 	
