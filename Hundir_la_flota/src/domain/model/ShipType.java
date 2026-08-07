@@ -1,6 +1,6 @@
-package domain;
+package domain.model;
 
-import exceptions.InvalidShipTypeException;
+import domain.exceptions.InvalidShipTypeException;
 
 import java.util.HashSet;
 import java.util.Set;

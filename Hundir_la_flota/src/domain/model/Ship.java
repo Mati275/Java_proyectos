@@ -1,6 +1,6 @@
-package domain;
+package domain.model;
 
-import states.ShipState;
+import domain.enums.ShipState;
 
 public class Ship implements Comparable<Ship>{
 

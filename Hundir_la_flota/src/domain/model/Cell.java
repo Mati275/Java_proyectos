@@ -1,6 +1,6 @@
-package domain;
+package domain.model;
 
-import states.CellState;
+import domain.enums.CellState;
 
 public class Cell {
 
