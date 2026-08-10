@@ -34,6 +34,8 @@ public class Cell {
      * Change the state of the cell to filled (has a ship) only if the cell's state previously was CellState.VOID
      * @throws RuntimeException
      */
+
+
     public void setCellFilled(){
 
         if( ! (cellState == CellState.VOID) ) {

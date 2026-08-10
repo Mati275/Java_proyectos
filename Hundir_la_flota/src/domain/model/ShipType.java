@@ -12,23 +12,26 @@ public class ShipType implements Comparable<ShipType>{
     private int width;
     private int size;
 
+
     private String name;
     private int id;         // The id is the "PK" that identifies one type of ship
+    private int initialBullets; // Number of bullets that this ship has initally
+    private int reloadBullets;  // Number of bullets that this ship reloads
 
-    // int points;
     public static ShipType[] shipTypes; // All the shipTypes in the game
 
     // CONSTRUCTOR
-    public ShipType(int height, int width, String name, int id){
+    public ShipType(int height, int width, String name, int id, int initialBullets, int reloadBullets){
         this.height = height;
         this.width = width;
         this.name = name;
 
         this.id = id;
 
-        size = height * width;
+        this.initialBullets = initialBullets;
+        this.reloadBullets = reloadBullets;
 
-        createShipTypes();
+        size = height * width;
     }
 
     // GETTERS
@@ -37,14 +40,14 @@ public class ShipType implements Comparable<ShipType>{
     public int getSize() { return size; };
     public String getName() { return name; }
 
-    public int getId() { return id; }
+    public int getShipTypeId() { return id; }
+    public int getInitialBullets() { return initialBullets; }
+    public int getReloadBullets() { return reloadBullets; }
+
 
     // ************
     // OTHER METHODS
     // ************
-
-
-    // PRIVATE METHODS
 
     /**
      * Creates the ShipTypes according to the parameters in the method and add the types to the "shipTypes" static attribute of the class
@@ -54,20 +57,20 @@ public class ShipType implements Comparable<ShipType>{
      * @param id
      * @throws InvalidShipTypeException if the length of the array in the parameters are different
      */
-    private void createShipTypes(int[] width, int[] height, String[] name, int[] id ){
+    public static void createShipTypes(int[] width, int[] height, String[] name, int[] id, int[] initialBullets, int[] reloadBullets){
 
         Set<ShipType> uniqueShipTypes = new HashSet<>();
 
         int length = width.length; // Stablish the length of the width the reference length
 
         // Comparing if all the length are the same
-        if( length == height.length && length == name.length && length == id.length ){
+        if( length == height.length && length == name.length && length == id.length && length == initialBullets.length && length == reloadBullets.length ){
 
             for( int i = 0; i < length; i++){
                 // Add a unique shipType
                 // if the shipType is repeated --> Throw InvalidShipTypeException
-                if ( !uniqueShipTypes.add( new ShipType( width[i], height[i], name[i], id[i] ) ) ){
-                    throw new InvalidShipTypeException("You are trying to add 2 shipTypes that are the same; name: " + name[i] + " width: " + width[i] + "height: " + height[i] + "id: " + id[i]);
+                if ( !uniqueShipTypes.add( new ShipType( width[i], height[i], name[i], id[i], initialBullets[i], reloadBullets[i] ) ) ){
+                    throw new InvalidShipTypeException("You are trying to add 2 shipTypes that are the same; name: " + name[i] + " width: " + width[i] + "height: " + height[i] + "id: " + id[i] "initial bullets: " + initialBullets[i] + "reload bullets: " + reloadBullets[i]);
                 }
             }
             // Transform the SET --> Array
@@ -84,22 +87,26 @@ public class ShipType implements Comparable<ShipType>{
     /**
      * Creates by default 3 types of ships to make tests
      */
-    private void createShipTypes(){
+    public static void createShipTypes(){
 
-        int[] width = { 3, 4, 7 };
-        int[] height = { 2, 2, 1 };
-        String[] name = { "Small", "medium", "large" };
-        int[] id = { 0, 1, 2 };
+        int[] width = {4, 5, 2, 3};
+        int[] height = {1, 2, 1, 1};
+        String[] name = { "Frigate", "Destructor", "Submarine", "Galleon" };
+        int[] id = { 0, 1, 2, 3 };
 
-        createShipTypes(width, height, name, id);
+        int[] initalBullets = {5, 3, 10, 3};
+        int[] reloadBullets = {1, 1, 2, 2};
+
+
+        createShipTypes(width, height, name, id, initalBullets, reloadBullets);
     }
+
+    // PRIVATE METHODS
 
     // TODO: this method
     private void createRandomShips(int numOfTypes){
 
     }
-
-
 
     @Override
     public int compareTo(ShipType shipType) {

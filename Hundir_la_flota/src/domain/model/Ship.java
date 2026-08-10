@@ -6,19 +6,18 @@ public class Ship implements Comparable<Ship>{
 
     // ATTRIBUTTES
 
-    // This position is a pivot
-//    private int posX;
-//    private int posY;
     Cell pivotCell;
     private ShipType shipType;
-    private int remainingCells;
 
-    private int id;             // The id is created automatically
+    private int remainingCells;
+    private int remainingBullets;
+
+    // The id is created automatically
+    private int id;
     private static int nextId;
 
     // States
     private ShipState shipState;
-
 
     // CONSTRUCTOR
 
@@ -35,7 +34,9 @@ public class Ship implements Comparable<Ship>{
         // Assign all the attributes
         this.pivotCell = pivotCell;
         this.shipType = shipType;
+
         this.remainingCells = shipType.getSize();
+        this.remainingBullets = shipType.getInitialBullets();
 
         this.id = nextId;   // Assign the id to the correct value
         nextId ++;          // Prepare the next id for the next object
@@ -70,11 +71,52 @@ public class Ship implements Comparable<Ship>{
     public int getShipTypeHeight() { return shipType.getHeight(); }
     public int getShipTypeSize() { return shipType.getSize(); };
     public String getShipTypeName() { return shipType.getName(); }
+    public int getShipTypeReloadBullets() { return shipType.getReloadBullets(); }
 
 
     // ************
     // OTHER METHODS
     // ************
+
+    /**
+     *
+     * @return if the ship can shoot
+     */
+    public boolean shoot(){
+
+        // The ship can shoot
+        if(remainingBullets > 0) {
+            remainingBullets -= 1;
+            return true;
+        } // The ship can't shoot
+
+        return false;
+    }
+
+
+    /**
+     * Subtract the number of cells depending on the quantity passed in parameters.
+     * @param quantity
+     * @return The remaining cells that this ship actually has
+     * @throws IllegalArgumentException if the quantity of the remaining cells after the change is "< 0" or "> getShipTypeSize()"
+     */
+    public int hurt( int quantity ){
+
+        if(quantity <= 0){
+            throw new IllegalArgumentException("The quantity of cells to substract is negative or 0: " + quantity);
+        }
+
+        remainingCells -= quantity;
+
+        // The quantity is impossible to subtract (it remains negative cells)
+        if(remainingCells < 0 || remainingCells > getShipTypeSize()){
+            throw new IllegalArgumentException("The quantity of the ship: " + this.toString() + " is: " + remainingCells + " that is impossible.");
+        } // The quantity is possible to subtract
+
+        return remainingCells;
+    }
+
+
 
 
     /**
@@ -86,30 +128,21 @@ public class Ship implements Comparable<Ship>{
     }
 
 
-    /**
-     * Change the number of cells depending on the quantity passed in parameters.
-     * @param quantity
-     * @return The remaining cells that this ship actually has
-     * @throws IllegalArgumentException if the quantity of the remaining cells after the change is "< 0" or "> getShipTypeSize()"
-     */
-    public int changeRemainingCells( int quantity ){
-        remainingCells += quantity;
 
-        if(remainingCells < 0 || remainingCells > getShipTypeSize()){
-            throw new IllegalArgumentException("The quantity of the ship: " + this.toString() + " is: " + remainingCells + " that is impossible.");
-        }
-
-        return remainingCells;
+    // TODO
+    /*
+    public String shipInfo(){
+        return null;
     }
+    */
 
 
 
 
-
-
-
-
-
+    /* TODO Future method ?
+    public int repair(){
+        return 0;
+    } */
 
 
     @Override
