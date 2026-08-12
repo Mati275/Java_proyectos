@@ -1,58 +1,51 @@
 package domain.model;
 
-import domain.enums.CellState;
-
-public class Cell {
+public abstract class Cell {
 
     // ATTRIBUTES
-    private Ship ship;
-    private CellState cellState;
     private boolean investigated;
+
+    //private Ship ship;
+
 
     // CONSTRUCTOR
     public Cell(){
 
-        this.cellState = CellState.VOID;
-        this.investigated = false;
+        this.investigated = false;  // At first, they aren't investigated
 
     }
 
     // GETTERS
-
-    public CellState getCellSate() {
-        return cellState;
+    public boolean isInvestigated() {
+        return investigated;
     }
 
-
+    // SETTERS
+    public void setInvestigated(boolean investigated) {
+        this.investigated = investigated;
+    }
 
 
     // **************
     // OTHER METHODS
     // **************
 
+
     /**
-     * Change the state of the cell to filled (has a ship) only if the cell's state previously was CellState.VOID
-     * @throws RuntimeException
+     *
+     * @return if the cell can be investigated. True if it can be investigated, false if it cannot be investigated.
      */
+    public boolean investigate() {
 
-
-    public void setCellFilled(){
-
-        if( ! (cellState == CellState.VOID) ) {
-            throw new RuntimeException("The cell: " + this.toString() + " that you are trying to fill is already filled");
+        if( investigated ){
+            return false;
         }
-        cellState = CellState.FILLED;
+        else{
+            investigated = true;
+            return true;
+        }
 
     }
-
-    public boolean investigate(){
-        if(!investigated){
-
-            if( cellState == CellState.FILLED )
-
-        }
-    }
-
 
 
 

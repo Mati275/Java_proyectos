@@ -1,4 +1,9 @@
 package domain.model;
 
-public class CellVoid {
+public class CellVoid extends Cell{
+
+    public CellVoid(){
+        super();
+    }
+
 }

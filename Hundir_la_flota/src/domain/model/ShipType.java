@@ -70,7 +70,7 @@ public class ShipType implements Comparable<ShipType>{
                 // Add a unique shipType
                 // if the shipType is repeated --> Throw InvalidShipTypeException
                 if ( !uniqueShipTypes.add( new ShipType( width[i], height[i], name[i], id[i], initialBullets[i], reloadBullets[i] ) ) ){
-                    throw new InvalidShipTypeException("You are trying to add 2 shipTypes that are the same; name: " + name[i] + " width: " + width[i] + "height: " + height[i] + "id: " + id[i] "initial bullets: " + initialBullets[i] + "reload bullets: " + reloadBullets[i]);
+                    throw new InvalidShipTypeException("You are trying to add 2 shipTypes that are the same; name: " + name[i] + " width: " + width[i] + "height: " + height[i] + "id: " + id[i] + "initial bullets: " + initialBullets[i] + "reload bullets: " + reloadBullets[i]);
                 }
             }
             // Transform the SET --> Array

@@ -5,7 +5,6 @@ import domain.enums.ShipState;
 public class Ship implements Comparable<Ship>{
 
     // ATTRIBUTTES
-
     Cell pivotCell;
     private ShipType shipType;
 
@@ -27,9 +26,6 @@ public class Ship implements Comparable<Ship>{
      * @param shipType
      */
     public Ship (Cell pivotCell, ShipType shipType){
-
-//        this.posX = posX;
-//        this.posY = posY;
 
         // Assign all the attributes
         this.pivotCell = pivotCell;
@@ -115,8 +111,6 @@ public class Ship implements Comparable<Ship>{
 
         return remainingCells;
     }
-
-
 
 
     /**
